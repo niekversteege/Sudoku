@@ -34,8 +34,11 @@ package nl.niek.minor.aa.sudoku;
 /**
  * Hello world!
  */
-public class App {
-  public static void main( String[] args ) {
-    System.out.println( "Hello World!" );
-  }
+public class App
+{
+	public static void main(String[] args)
+	{
+		Sudoku s = new Sudoku();
+		s.go();
+	}
 }

@@ -15,7 +15,9 @@ public class Sudoku
 
 	private boolean					solved			= false;
 
-	SudokuPrinter					printer;
+	private SudokuPrinter			printer;
+
+	private boolean					unsolvable		= false;
 
 	public Sudoku()
 	{
@@ -32,13 +34,19 @@ public class Sudoku
 
 	public void go()
 	{
-
 		initBoard();
 		printer.printSudokuField(sudokuBoard, BOX_SIZE);
 		checkPossibleNumbers();
-		solve();
 
-		printer.printSudokuField(sudokuBoard, BOX_SIZE);
+		if (unsolvable)
+		{
+			printer.printLine("Sudoku is unsolvable");
+		}
+		else
+		{
+			solve();
+			printer.printSudokuField(sudokuBoard, BOX_SIZE);
+		}
 	}
 
 	private void initBoard()
@@ -48,13 +56,16 @@ public class Sudoku
 		if (existingBoard == null)
 		{
 			// use default board
-			sudokuBoard[0][0] = 1;
-			sudokuBoard[0][1] = 1;
+			sudokuBoard[0][0] = 8;
+			sudokuBoard[1][5] = 2;
+			sudokuBoard[2][4] = 7;
+			sudokuBoard[8][1] = 7;
 		}
 		else
 		{
 			// use existing board
 			// copy existing board into sudokuBoard
+			sudokuBoard = existingBoard;
 		}
 	}
 
@@ -77,14 +88,13 @@ public class Sudoku
 
 	private void solve(int row, int column)
 	{
-
 		// if we reach the end of the column, go to the next row.
 		if (column == BOARD_SIZE)
 		{
 			column = 0;
 			row++;
 		}
-		if (row == BOARD_SIZE)
+		if (row == BOARD_SIZE || solved || unsolvable)
 		{
 			solved = true;
 			return;
@@ -112,7 +122,8 @@ public class Sudoku
 	}
 
 	/**
-	 * Check the whole field for the possibilities per numberbox.
+	 * Check the whole field for the possibilities per numberbox. If a numberbox
+	 * without possibilities is found: sets unsolvable to true;
 	 */
 	private void checkPossibleNumbers()
 	{
@@ -120,7 +131,13 @@ public class Sudoku
 		{
 			for (int col = 0; col < BOARD_SIZE; col++)
 			{
-				possibleOptions[row][col].addAll(getPossibleOptions(row, col));
+				List<Integer> possibilitiesForBox = getPossibleOptions(row, col);
+				if (possibilitiesForBox.isEmpty())
+				{
+					unsolvable = true;
+					return;
+				}
+				possibleOptions[row][col].addAll(possibilitiesForBox);
 			}
 		}
 	}

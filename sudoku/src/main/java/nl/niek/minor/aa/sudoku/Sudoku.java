@@ -5,42 +5,67 @@ import java.util.List;
 
 public class Sudoku
 {
-	private static final int		BOARD_SIZE	= 9;
+	private static final int		BOARD_SIZE		= 9;
 
-	private static final int		BOX_SIZE	= 3;
+	private static final int		BOX_SIZE		= 3;
 
 	private int[][]					sudokuBoard;
-	private boolean					solved		= false;
+	private int[][]					existingBoard	= null;
 	private ArrayList<Integer>[][]	possibleOptions;
+
+	private boolean					solved			= false;
+
+	SudokuPrinter					printer;
 
 	public Sudoku()
 	{
 		sudokuBoard = new int[BOARD_SIZE][BOARD_SIZE];
 		possibleOptions = new ArrayList[BOARD_SIZE + 1][BOARD_SIZE + 1];
+		printer = new SudokuPrinter();
 	}
 
 	public Sudoku(final int[][] existingBoard)
 	{
 		this();
-		this.sudokuBoard = existingBoard;
+		this.existingBoard = existingBoard;
 	}
 
 	public void go()
 	{
+
 		initBoard();
+		printer.printSudokuField(sudokuBoard, BOX_SIZE);
 		checkPossibleNumbers();
 		solve();
+
+		printer.printSudokuField(sudokuBoard, BOX_SIZE);
 	}
 
 	private void initBoard()
 	{
-		if (sudokuBoard == null)
+		initPossibleOptions();
+
+		if (existingBoard == null)
 		{
 			// use default board
+			sudokuBoard[0][0] = 1;
+			sudokuBoard[0][1] = 1;
 		}
 		else
 		{
 			// use existing board
+			// copy existing board into sudokuBoard
+		}
+	}
+
+	private void initPossibleOptions()
+	{
+		for (int i = 0; i < BOARD_SIZE; i++)
+		{
+			for (int j = 0; j < BOARD_SIZE; j++)
+			{
+				possibleOptions[i][j] = new ArrayList<Integer>();
+			}
 		}
 	}
 
@@ -50,12 +75,13 @@ public class Sudoku
 		solve(0, 0);
 	}
 
-	private void solve(int row, int col)
+	private void solve(int row, int column)
 	{
+
 		// if we reach the end of the column, go to the next row.
-		if (col == BOARD_SIZE)
+		if (column == BOARD_SIZE)
 		{
-			col = 0;
+			column = 0;
 			row++;
 		}
 		if (row == BOARD_SIZE)
@@ -63,24 +89,25 @@ public class Sudoku
 			solved = true;
 			return;
 		}
-		if (sudokuBoard[row][col] == 0)
+		if (sudokuBoard[row][column] == 0)
 		{
-			for (Integer number : possibleOptions[row][col])
+			for (Integer number : possibleOptions[row][column])
 			{
-				if (isPossible(row, col, number) && !solved)
+				if (isPossible(row, column, number) && !solved)
 				{
-					sudokuBoard[row][col] = number;
-					solve(row, col + 1);
+					sudokuBoard[row][column] = number;
+					// recursive call
+					solve(row, column + 1);
 				}
 			}
 			if (!solved)
 			{
-				sudokuBoard[row][col] = 0;
+				sudokuBoard[row][column] = 0;
 			}
 		}
 		else
 		{
-			solve(row, col + 1);
+			solve(row, column + 1);
 		}
 	}
 

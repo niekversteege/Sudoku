@@ -13,8 +13,8 @@
   <version>0.1</version>
 
   <scm>
-    <connection>scm:git:git://git.cedarsoft.com/nl.niek.sudoku</connection>
-    <developerConnection>scm:git:ssh://git.cedarsoft.com/home/git/nl.niek.sudoku</developerConnection>
+    <connection>scm:git:git://git.cedarsoft.com/nl.niek.minor.aa.sudoku</connection>
+    <developerConnection>scm:git:ssh://git.cedarsoft.com/home/git/nl.niek.minor.aa.sudoku</developerConnection>
   </scm>
 
   <dependencies>

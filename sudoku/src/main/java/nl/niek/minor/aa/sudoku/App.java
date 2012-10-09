@@ -32,7 +32,7 @@
 package nl.niek.minor.aa.sudoku;
 
 /**
- * Hello world!
+ * sdfsd
  */
 public class App
 {

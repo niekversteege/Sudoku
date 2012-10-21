@@ -38,11 +38,7 @@ public class Sudoku
 		printer.printSudokuField(sudokuBoard, BOX_SIZE);
 		checkPossibleNumbers();
 
-		if (unsolvable)
-		{
-			printer.printLine("Sudoku is unsolvable");
-		}
-		else
+		if (!unsolvable)
 		{
 			solve();
 			printer.printSudokuField(sudokuBoard, BOX_SIZE);
@@ -66,6 +62,11 @@ public class Sudoku
 			// use existing board
 			// copy existing board into sudokuBoard
 			sudokuBoard = existingBoard;
+		}
+
+		if (unsolvable)
+		{
+			printer.printLine("Sudoku is unsolvable");
 		}
 	}
 

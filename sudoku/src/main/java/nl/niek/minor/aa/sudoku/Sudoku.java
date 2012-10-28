@@ -35,12 +35,14 @@ public class Sudoku
 	public void go()
 	{
 		initBoard();
+		printer.printLine("Before:");
 		printer.printSudokuField(sudokuBoard, BOX_SIZE);
-		checkPossibleNumbers();
+		preSolve();
 
 		if (!unsolvable)
 		{
 			solve();
+			printer.printLine("After:");
 			printer.printSudokuField(sudokuBoard, BOX_SIZE);
 		}
 	}
@@ -83,13 +85,18 @@ public class Sudoku
 
 	private void solve()
 	{
-		// starter call for recursive solve funtion
 		solve(0, 0);
 	}
 
+	/**
+	 * Visit every tile. For every option that tile has, try it. If it doesn't
+	 * work: try the next. If none work: set to zero.
+	 * 
+	 * @param row
+	 * @param column
+	 */
 	private void solve(int row, int column)
 	{
-		// if we reach the end of the column, go to the next row.
 		if (column == BOARD_SIZE)
 		{
 			column = 0;
@@ -126,7 +133,7 @@ public class Sudoku
 	 * Check the whole field for the possibilities per numberbox. If a numberbox
 	 * without possibilities is found: sets unsolvable to true;
 	 */
-	private void checkPossibleNumbers()
+	private void preSolve()
 	{
 		for (int row = 0; row < BOARD_SIZE; row++)
 		{

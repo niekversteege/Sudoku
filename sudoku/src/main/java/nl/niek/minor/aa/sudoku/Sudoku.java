@@ -39,7 +39,11 @@ public class Sudoku
 		printer.printSudokuField(sudokuBoard, BOX_SIZE);
 		preSolve();
 
-		if (!unsolvable)
+		if (unsolvable)
+		{
+			printer.printLine("Sudoku is not solvable.");
+		}
+		else
 		{
 			solve();
 			printer.printLine("After:");
@@ -54,10 +58,40 @@ public class Sudoku
 		if (existingBoard == null)
 		{
 			// use default board
-			sudokuBoard[0][0] = 8;
-			sudokuBoard[1][5] = 2;
-			sudokuBoard[2][4] = 7;
-			sudokuBoard[8][1] = 7;
+			sudokuBoard[0][2] = 4;
+			sudokuBoard[0][3] = 3;
+			sudokuBoard[0][5] = 2;
+			sudokuBoard[0][6] = 1;
+
+			sudokuBoard[1][1] = 6;
+			sudokuBoard[1][7] = 2;
+
+			sudokuBoard[2][0] = 9;
+			sudokuBoard[2][8] = 7;
+
+			sudokuBoard[3][2] = 1;
+			sudokuBoard[3][4] = 3;
+			sudokuBoard[3][6] = 2;
+			
+			sudokuBoard[4][0] = 2;
+			sudokuBoard[4][3] = 9;
+			sudokuBoard[4][5] = 6;
+			sudokuBoard[4][8] = 1;
+			
+			sudokuBoard[5][2] = 9;
+			sudokuBoard[5][4] = 5;
+			sudokuBoard[5][6] = 4;
+			
+			sudokuBoard[6][0] = 7;
+			sudokuBoard[6][8] = 3;
+			
+			sudokuBoard[7][1] = 1;
+			sudokuBoard[7][7] = 4;
+			
+			sudokuBoard[8][2] = 8;
+			sudokuBoard[8][3] = 5;
+			sudokuBoard[8][5] = 3;
+			sudokuBoard[8][6] = 9;
 		}
 		else
 		{

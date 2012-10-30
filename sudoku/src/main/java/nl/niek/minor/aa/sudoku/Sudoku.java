@@ -139,13 +139,17 @@ public class Sudoku
 		{
 			for (int col = 0; col < BOARD_SIZE; col++)
 			{
-				List<Integer> possibilitiesForBox = getPossibleOptions(row, col);
-				if (possibilitiesForBox.isEmpty())
+				if (sudokuBoard[row][col] == 0)
 				{
-					unsolvable = true;
-					return;
+					List<Integer> possibilitiesForBox = getPossibleOptions(row,
+							col);
+					if (possibilitiesForBox.isEmpty())
+					{
+						unsolvable = true;
+						return;
+					}
+					possibleOptions[row][col].addAll(possibilitiesForBox);
 				}
-				possibleOptions[row][col].addAll(possibilitiesForBox);
 			}
 		}
 	}
@@ -193,6 +197,13 @@ public class Sudoku
 		return false;
 	}
 
+	/**
+	 * Does the given row already have number in it?
+	 * 
+	 * @param row
+	 * @param number
+	 * @return
+	 */
 	private boolean rowHasNumber(int row, int number)
 	{
 		for (int i = 0; i < BOARD_SIZE; i++)
@@ -206,6 +217,13 @@ public class Sudoku
 		return false;
 	}
 
+	/**
+	 * Does the given col(umn) already have number in it?
+	 * 
+	 * @param col
+	 * @param number
+	 * @return
+	 */
 	private boolean columnHasNumber(int col, int number)
 	{
 		for (int i = 0; i < BOARD_SIZE; i++)
